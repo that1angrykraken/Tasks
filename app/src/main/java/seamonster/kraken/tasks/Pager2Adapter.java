@@ -17,12 +17,11 @@ public class Pager2Adapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         if(position == 0) return new TaskFragment();
         if(position == 1) return new FinishedFragment();
-        if(position == 2) return new MissedFragment();
         return null;
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 }

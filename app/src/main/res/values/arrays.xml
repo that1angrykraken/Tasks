@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="repeat_frequency">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
+    <string-array name="categories">
+        <item>Home</item>
+        <item>Work</item>
+        <item>Sport</item>
+        <item>Fitness</item>
+        <item>Entertainment</item>
+        <item>Education</item>
+        <item>Cooking</item>
+    </string-array>
+</resources>

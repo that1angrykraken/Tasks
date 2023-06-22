@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
@@ -22,11 +23,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     ArrayList<Task> data;
     Drawable repeatIcon;
+    ItemClickListener listener;
     static final String TAG = "TaskAdapter";
 
-    public TaskAdapter(ArrayList<Task> data, Context context) {
+    public TaskAdapter(ArrayList<Task> data, Fragment fragment) {
         this.data = data;
-        repeatIcon = ContextCompat.getDrawable(context, R.drawable.round_repeat_24);
+        repeatIcon = ContextCompat.getDrawable(fragment.requireContext(), R.drawable.round_repeat_24);
+        listener = (ItemClickListener) fragment;
+    }
+
+    public ArrayList<Task> getData() {
+        return data;
+    }
+
+    public void setData(ArrayList<Task> data) {
+        this.data = data;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -42,11 +54,19 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         Task task = data.get(position);
         holder.binding.setTask(task);
         holder.binding.setRepeatIcon(repeatIcon);
-        holder.binding.checkbox.addOnCheckedStateChangedListener((checkBox, state) -> {
-            Log.d(TAG, "onBindViewHolder: "+task.isFinished());
-            holder.binding.invalidateAll();
+        String[] categories = holder.binding.getRoot()
+                .getContext().getResources().getStringArray(R.array.categories);
+        holder.binding.setTaskCategory(categories[task.categoryId]);
+        holder.binding.getRoot().setOnClickListener(v -> {
+            listener.onItemClick(v, task);
         });
-        Log.d(TAG, "onBindViewHolder: passed");
+        holder.binding.checkbox.addOnCheckedStateChangedListener((checkBox, state) -> {
+            if(state == MaterialCheckBox.STATE_CHECKED){
+                notifyItemRemoved(data.indexOf(task));
+                data.remove(task);
+                listener.onItemCheckedChange(checkBox, task);
+            }
+        });
     }
 
     @Override

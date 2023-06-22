@@ -10,11 +10,17 @@
         <variable
             name="task"
             type="seamonster.kraken.tasks.Task" />
+        <variable
+            name="taskCategory"
+            type="String" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:checkable="true"
         android:visibility="@{task.finished||task.expired?View.GONE:View.VISIBLE}">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,40 +32,54 @@
                 android:checked="@={task.finished}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
-            <LinearLayout
-                android:layout_width="wrap_content"
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textTitle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:text="@{task.title}"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
                 app:layout_constraintStart_toEndOf="@id/checkbox"
-                app:layout_constraintTop_toTopOf="parent">
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/textTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:text="@{task.title}"/>
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/textDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{task.desc}"/>
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipDateTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{task.expiredDate}"
-                    app:chipIcon="@{task.repeat?repeatIcon:null}"/>
-            </LinearLayout>
-            <ImageView
+                app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textDesc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{task.desc}"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@id/checkbox"
+                app:layout_constraintTop_toBottomOf="@id/textTitle" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/round_star_24"
+                android:visibility="@{task.expiredDate==null?View.GONE:View.VISIBLE}"
+                android:text="@{task.expiredDate}"
+                app:chipIcon="@{task.repeat?repeatIcon:null}"
+                app:layout_constraintTop_toBottomOf="@id/textDesc"
+                app:layout_constraintStart_toEndOf="@id/checkbox"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{taskCategory}"
+                app:layout_constraintTop_toBottomOf="@id/textDesc"
+                app:layout_constraintStart_toEndOf="@id/chipDateTime"
+                style="@style/Widget.Material3.Chip.Suggestion.Elevated"/>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:scaleType="centerInside"
+                android:src="@drawable/round_star_24"
                 android:visibility="@{task.important?View.VISIBLE:View.GONE}"
-                app:tint="?colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:tint="#91D118" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

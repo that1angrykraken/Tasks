@@ -5,6 +5,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -24,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Tasks"));
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Finished"));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Missed"));
 
         adapter = new Pager2Adapter(getSupportFragmentManager(), getLifecycle());
         binding.viewPager.setAdapter(adapter);
@@ -49,11 +49,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position));
+
+                binding.extendedFAB.setVisibility(position==0?View.VISIBLE:View.INVISIBLE);
+                binding.bottomBar.setVisibility(binding.extendedFAB.getVisibility());
             }
         });
 
         binding.extendedFAB.setOnClickListener(v -> {
-            AddTaskDialog dialog = new AddTaskDialog();
+            AddTaskDialog dialog = new AddTaskDialog(new Task(), null);
             dialog.show(getSupportFragmentManager(), "DialogFragment");
         });
     }

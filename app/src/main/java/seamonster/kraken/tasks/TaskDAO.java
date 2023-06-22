@@ -13,6 +13,9 @@ public interface TaskDAO {
     @Query("SELECT * FROM Task")
     List<Task> getTasks();
 
+    @Query("SELECT * FROM Task WHERE finished = 0")
+    List<Task> getActiveTasks();
+
     @Query("SELECT * FROM Task WHERE categoryId = :categoryId " +
             "AND finished = 0 AND expired = 0")
     List<Task> getTasks(int categoryId);

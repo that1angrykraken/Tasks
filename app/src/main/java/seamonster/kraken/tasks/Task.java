@@ -17,6 +17,8 @@ public class Task {
     String desc;
     @ColumnInfo(name = "expiredDate")
     String expiredDate;
+    @ColumnInfo(name = "expiredTime")
+    String expiredTime;
     @ColumnInfo(name = "important")
     boolean important;
     @ColumnInfo(name = "expired")
@@ -29,17 +31,12 @@ public class Task {
     public Task() {
     }
 
-    @Ignore
-    public Task(int id, int categoryId, String title, String desc, String expiredDate, boolean important, boolean expired, boolean finished, boolean repeat) {
-        this.id = id;
-        this.categoryId = categoryId;
-        this.title = title;
-        this.desc = desc;
-        this.expiredDate = expiredDate;
-        this.important = important;
-        this.expired = expired;
-        this.finished = finished;
-        this.repeat = repeat;
+    public String getExpiredTime() {
+        return expiredTime;
+    }
+
+    public void setExpiredTime(String expiredTime) {
+        this.expiredTime = expiredTime;
     }
 
     public int getCategoryId() {
