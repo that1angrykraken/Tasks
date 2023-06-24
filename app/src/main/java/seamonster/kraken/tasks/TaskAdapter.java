@@ -26,6 +26,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     ItemClickListener listener;
     static final String TAG = "TaskAdapter";
 
+    public TaskAdapter() {
+    }
+
     public TaskAdapter(ArrayList<Task> data, Fragment fragment) {
         this.data = data;
         repeatIcon = ContextCompat.getDrawable(fragment.requireContext(), R.drawable.round_repeat_24);
@@ -57,13 +60,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         String[] categories = holder.binding.getRoot()
                 .getContext().getResources().getStringArray(R.array.categories);
         holder.binding.setTaskCategory(categories[task.categoryId]);
-        holder.binding.getRoot().setOnClickListener(v -> {
-            listener.onItemClick(v, task);
-        });
+        holder.binding.getRoot().setOnClickListener(v -> listener.onItemClick(v, task));
         holder.binding.checkbox.addOnCheckedStateChangedListener((checkBox, state) -> {
             if(state == MaterialCheckBox.STATE_CHECKED){
-                notifyItemRemoved(data.indexOf(task));
-                data.remove(task);
                 listener.onItemCheckedChange(checkBox, task);
             }
         });

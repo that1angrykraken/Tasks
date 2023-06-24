@@ -16,12 +16,15 @@ public interface TaskDAO {
     @Query("SELECT * FROM Task WHERE finished = 0")
     List<Task> getActiveTasks();
 
-    @Query("SELECT * FROM Task WHERE categoryId = :categoryId " +
-            "AND finished = 0 AND expired = 0")
-    List<Task> getTasks(int categoryId);
+    @Query("SELECT * FROM Task WHERE finished = 1")
+    List<Task> getFinishedTasks();
+
+    @Query("SELECT * FROM Task WHERE categoryId IN (:categoryIds) " +
+            "AND finished = 0")
+    List<Task> getTasks(Integer... categoryIds);
 
     @Query("SELECT * FROM Task WHERE important = 1 " +
-            "AND finished = 0 AND expired = 0")
+            "AND finished = 0")
     List<Task> getImportantTasks();
 
     @Insert
