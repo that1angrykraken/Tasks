@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -20,7 +19,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?actionBarSize"
                     app:layout_scrollFlags="scroll|enterAlways|snap"
-                    app:title="To do"
+                    app:title="@string/to_do_title"
                     app:titleCentered="true">
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/imgUserIcon"
@@ -52,10 +51,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/viewPager"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:text="Add task"
+                android:text="@string/add_task"
                 android:layout_margin="12dp"
                 app:icon="@drawable/add_"/>
 
@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Filter: "
+                android:text="@string/filters"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
             <HorizontalScrollView
@@ -101,7 +101,7 @@
                         android:id="@+id/chipFilterImportant"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Important"
+                        android:text="@string/important"
                         android:checkable="true"
                         app:chipIconTint="#9CD519"
                         app:chipIcon="@drawable/round_star_24"

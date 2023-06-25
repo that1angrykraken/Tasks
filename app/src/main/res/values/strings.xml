@@ -2,4 +2,21 @@
     <string name="app_name">Tasks</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="repeat">Repeat</string>
+    <string name="save">Save</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="choose_a_category">Choose a category:</string>
+    <string name="mark_as_important">Mark as important</string>
+    <string name="set_date">Set date</string>
+    <string name="delete_task">Delete task</string>
+    <string name="set_time">Set time</string>
+    <string name="edit_task">Edit task</string>
+    <string name="pick_an_image">Pick an image</string>
+    <string name="select_image">Select image</string>
+    <string name="remove_attached_image">Remove attached image</string>
+    <string name="filters">Filters: \ </string>
+    <string name="add_task">Add task</string>
+    <string name="important">Important</string>
+    <string name="to_do_title">To do</string>
 </resources>

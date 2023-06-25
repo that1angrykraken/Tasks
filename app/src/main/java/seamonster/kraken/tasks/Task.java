@@ -35,8 +35,20 @@ public class Task extends BaseObservable {
     boolean repeat;
     @ColumnInfo(name = "repeatFrequency")
     int repeatFrequency;
+    @ColumnInfo(name = "imgPath")
+    String imgPath;
 
     public Task() {
+    }
+
+    @Bindable
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+        notifyPropertyChanged(BR.imgPath);
     }
 
     @Bindable

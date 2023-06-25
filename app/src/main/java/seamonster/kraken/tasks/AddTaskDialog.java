@@ -1,9 +1,14 @@
 package seamonster.kraken.tasks;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -11,6 +16,7 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.timepicker.MaterialTimePicker;
+import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 
@@ -48,6 +54,9 @@ public class AddTaskDialog extends DialogFragment {
         addChipRepeatFrequencies();
         binding.btnSetDate.setOnClickListener(v -> setDate());
         binding.btnSetTime.setOnClickListener(v -> setTime());
+        setTaskImg();
+        setSelectImgButton();
+        setRemoveAttachedImgButton();
 
         Dialog dialog = new Dialog(requireContext(), R.style.DialogTheme);
         binding.toolBar.setNavigationOnClickListener(v -> dialog.cancel());
@@ -67,6 +76,35 @@ public class AddTaskDialog extends DialogFragment {
     public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
         listener1.onDialogDismissed();
+    }
+
+    void setSelectImgButton(){
+        ActivityResultLauncher<Intent> launcher =  registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == Activity.RESULT_OK){
+                        Intent data = result.getData();
+                        if(data == null || data.getData() == null) return;
+                        String imgPath = data.getData().toString();
+                        task.setImgPath(imgPath);
+                        setTaskImg();
+                    }
+                });
+        binding.btnSelectImg.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            launcher.launch(intent);
+        });
+    }
+
+    void setTaskImg(){
+        if(task.getImgPath() == null || task.getImgPath().isEmpty()) return;
+        Picasso.get().load(task.getImgPath()).into(binding.imgAttached);
+    }
+
+    void setRemoveAttachedImgButton(){
+        binding.btnRemoveAttachedImg.setOnClickListener(v -> {
+            task.setImgPath("");
+            binding.imgAttached.setImageResource(R.drawable.outline_image_128);
+        });
     }
 
     void setDate(){

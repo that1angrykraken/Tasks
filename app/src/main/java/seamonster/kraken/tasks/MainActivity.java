@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements IDialogDismissedL
             Chip chip = new Chip(context);
             chip.setText(categories[i]);
             chip.setCheckable(true);
+            chip.setCheckedIconVisible(true);
             int currentIndex = i;
             chip.setOnCheckedChangeListener((compoundButton, b) -> {
                 if(b) {
@@ -73,8 +74,13 @@ public class MainActivity extends AppCompatActivity implements IDialogDismissedL
                     filters.add(currentIndex);
                 }
                 else filters.remove((Object) currentIndex);
-                listener.onDataChanged(db.taskDAO().getTasks(filters.toArray(new Integer[0]))
-                        .toArray(new Task[0]));
+                List<Task> result = null;
+                if(filters.isEmpty())
+                    result = new ArrayList<>(db.taskDAO().getActiveTasks());
+                else
+                    result = new ArrayList<>(db.taskDAO().getTasks(filters.toArray(new Integer[0])));
+
+                listener.onDataChanged(result.toArray(new Task[0]));
             });
             binding.chipGroupFilters.addView(chip);
         }
